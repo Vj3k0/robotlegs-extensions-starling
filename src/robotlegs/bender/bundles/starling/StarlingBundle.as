@@ -1,7 +1,7 @@
 package robotlegs.bender.bundles.starling
 {
 	
-	import robotlegs.bender.bundles.shared.config.StarlingContextViewListenerConfig;
+	import robotlegs.bender.bundles.shared.configs.StarlingContextViewListenerConfig;
 	import robotlegs.bender.extensions.commandMap.CommandMapExtension;
 	import robotlegs.bender.extensions.contextView.StarlingContextViewExtension;
 	import robotlegs.bender.extensions.eventCommandMap.EventCommandMapExtension;
@@ -15,13 +15,13 @@ package robotlegs.bender.bundles.starling
 	import robotlegs.bender.extensions.viewManager.StarlingStageObserverExtension;
 	import robotlegs.bender.extensions.viewManager.StarlingViewManagerExtension;
 	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextConfig;
+	import robotlegs.bender.framework.context.api.IContextExtension;
 	
-	public class StarlingBundle implements IContextConfig
+	public class StarlingBundle implements IContextExtension
 	{
-		public function configureContext(context:IContext):void
+		public function extend(context:IContext):void
 		{
-			context.require(
+			context.extend(
 				TraceLoggingExtension,
 				StarlingContextViewExtension,
 				EventDispatcherExtension,
@@ -33,8 +33,9 @@ package robotlegs.bender.bundles.starling
 				StarlingViewManagerExtension,
 				StarlingStageObserverExtension,
 				ManualStageObserverExtension,
-				StarlingMediatorMapExtension,
-				StarlingContextViewListenerConfig);
+				StarlingMediatorMapExtension);
+			
+			context.configure(StarlingContextViewListenerConfig);
 		}
 	}
 }

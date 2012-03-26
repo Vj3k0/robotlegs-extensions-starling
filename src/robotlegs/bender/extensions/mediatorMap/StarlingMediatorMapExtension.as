@@ -16,10 +16,10 @@ package robotlegs.bender.extensions.mediatorMap
 	import robotlegs.bender.extensions.mediatorMap.impl.StarlingMediatorMap;
 	import robotlegs.bender.extensions.viewManager.api.IStarlingViewManager;
 	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextConfig;
+	import robotlegs.bender.framework.context.api.IContextExtension;
 	import robotlegs.bender.framework.object.managed.impl.ManagedObject;
 
-	public class StarlingMediatorMapExtension implements IContextConfig
+	public class StarlingMediatorMapExtension implements IContextExtension
 	{
 
 		/*============================================================================*/
@@ -40,7 +40,7 @@ package robotlegs.bender.extensions.mediatorMap
 		/* Public Functions                                                           */
 		/*============================================================================*/
 
-		public function configureContext(context:IContext):void
+		public function extend(context:IContext):void
 		{
 			_context = context;
 			_injector = context.injector;

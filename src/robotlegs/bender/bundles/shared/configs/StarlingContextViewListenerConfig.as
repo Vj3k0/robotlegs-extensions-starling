@@ -5,7 +5,7 @@
 //  in accordance with the terms of the license agreement accompanying it. 
 //------------------------------------------------------------------------------
 
-package robotlegs.bender.bundles.shared.config
+package robotlegs.bender.bundles.shared.configs
 {
 	import robotlegs.bender.extensions.viewManager.api.IStarlingViewManager;
 	

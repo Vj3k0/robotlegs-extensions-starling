@@ -10,10 +10,10 @@ package robotlegs.bender.extensions.viewManager
 	import robotlegs.bender.extensions.viewManager.impl.StarlingContainerRegistry;
 	import robotlegs.bender.extensions.viewManager.impl.StarlingStageObserver;
 	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextConfig;
+	import robotlegs.bender.framework.context.api.IContextExtension;
 	import robotlegs.bender.framework.object.managed.impl.ManagedObject;
 
-	public class StarlingStageObserverExtension implements IContextConfig
+	public class StarlingStageObserverExtension implements IContextExtension
 	{
 
 		/*============================================================================*/
@@ -35,7 +35,7 @@ package robotlegs.bender.extensions.viewManager
 		/* Public Functions                                                           */
 		/*============================================================================*/
 
-		public function configureContext(context:IContext):void
+		public function extend(context:IContext):void
 		{
 			_installCount++;
 			_context = context;

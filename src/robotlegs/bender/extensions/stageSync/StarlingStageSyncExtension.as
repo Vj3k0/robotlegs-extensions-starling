@@ -10,7 +10,7 @@ package robotlegs.bender.extensions.stageSync
 	import org.hamcrest.object.instanceOf;
 	
 	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextConfig;
+	import robotlegs.bender.framework.context.api.IContextExtension;
 	import robotlegs.bender.framework.logging.api.ILogger;
 	import robotlegs.bender.framework.object.identity.UID;
 	
@@ -23,7 +23,7 @@ package robotlegs.bender.extensions.stageSync
 	 *
 	 * <p>It should be installed before context initialization.</p>
 	 */
-	public class StarlingStageSyncExtension implements IContextConfig
+	public class StarlingStageSyncExtension implements IContextExtension
 	{
 
 		/*============================================================================*/
@@ -42,7 +42,7 @@ package robotlegs.bender.extensions.stageSync
 		/* Public Functions                                                           */
 		/*============================================================================*/
 
-		public function configureContext(context:IContext):void
+		public function extend(context:IContext):void
 		{
 			_context = context;
 			_logger = context.getLogger(this);
