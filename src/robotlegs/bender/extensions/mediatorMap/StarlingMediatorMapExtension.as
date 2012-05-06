@@ -14,10 +14,10 @@ package robotlegs.bender.extensions.mediatorMap
 	import robotlegs.bender.extensions.mediatorMap.impl.MediatorFactory;
 	import robotlegs.bender.extensions.mediatorMap.impl.StarlingMediatorManager;
 	import robotlegs.bender.extensions.mediatorMap.impl.StarlingMediatorMap;
+	import robotlegs.bender.extensions.viewManager.api.IStarlingViewHandler;
 	import robotlegs.bender.extensions.viewManager.api.IStarlingViewManager;
-	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextExtension;
-	import robotlegs.bender.framework.object.managed.impl.ManagedObject;
+	import robotlegs.bender.framework.api.IContext;
+	import robotlegs.bender.framework.api.IContextExtension;
 
 	public class StarlingMediatorMapExtension implements IContextExtension
 	{
@@ -46,7 +46,8 @@ package robotlegs.bender.extensions.mediatorMap
 			_injector = context.injector;
 			_injector.map(IMediatorFactory).toSingleton(MediatorFactory);
 			_injector.map(IStarlingMediatorMap).toSingleton(StarlingMediatorMap);
-			_context.addStateHandler(ManagedObject.PRE_INITIALIZE, handleContextPreInitialize);
+			// todo: figure out why this is done as preInitialize
+			_context.lifecycle.beforeInitializing(handleContextPreInitialize);
 		}
 
 		/*============================================================================*/
@@ -60,7 +61,7 @@ package robotlegs.bender.extensions.mediatorMap
 			if (_injector.satisfiesDirectly(IStarlingViewManager))
 			{
 				_viewManager = _injector.getInstance(IStarlingViewManager);
-				_viewManager.addViewHandler(_mediatorMap);
+				_viewManager.addViewHandler(_mediatorMap as IStarlingViewHandler);
 			}
 		}
 	}

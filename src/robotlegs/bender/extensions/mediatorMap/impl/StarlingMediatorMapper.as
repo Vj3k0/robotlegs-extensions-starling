@@ -8,67 +8,59 @@
 package robotlegs.bender.extensions.mediatorMap.impl
 {
 	import flash.utils.Dictionary;
-	
-	import org.hamcrest.Matcher;
-	
-	import robotlegs.bender.extensions.mediatorMap.api.IMediatorFactory;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 	import robotlegs.bender.extensions.mediatorMap.api.IStarlingMediatorViewHandler;
 	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorMapper;
 	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorMappingConfig;
 	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorMappingFinder;
 	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorUnmapper;
-
+	import robotlegs.bender.extensions.matching.ITypeMatcher;
+	import robotlegs.bender.extensions.matching.ITypeFilter;
+	
 	public class StarlingMediatorMapper implements IMediatorMapper, IMediatorMappingFinder, IMediatorUnmapper
 	{
-
+		
 		/*============================================================================*/
 		/* Private Properties                                                         */
 		/*============================================================================*/
-
+		
 		private const _mappings:Dictionary = new Dictionary();
-
-		private var _matcher:Matcher;
-
+		
+		private var _matcher:ITypeFilter;
+		
 		private var _handler:IStarlingMediatorViewHandler;
-
-		private var _manager:IMediatorFactory;
-
-		private var _viewType:Class;
-
+		
 		/*============================================================================*/
 		/* Constructor                                                                */
 		/*============================================================================*/
-
-		public function StarlingMediatorMapper(matcher:Matcher, handler:IStarlingMediatorViewHandler, manager:IMediatorFactory, viewType:Class = null)
+		
+		public function StarlingMediatorMapper(matcher:ITypeFilter, handler:IStarlingMediatorViewHandler)
 		{
 			_matcher = matcher;
 			_handler = handler;
-			_manager = manager;
-			_viewType = viewType;
 		}
-
+		
 		/*============================================================================*/
 		/* Public Functions                                                           */
 		/*============================================================================*/
-
+		
 		public function toMediator(mediatorClass:Class):IMediatorMappingConfig
 		{
-			return _mappings[mediatorClass] ||= createMapping(mediatorClass);
+			return lockedMappingFor(mediatorClass) || createMapping(mediatorClass);
 		}
-
+		
 		public function forMediator(mediatorClass:Class):IMediatorMapping
 		{
 			return _mappings[mediatorClass];
 		}
-
+		
 		public function fromMediator(mediatorClass:Class):void
 		{
 			const mapping:IMediatorMapping = _mappings[mediatorClass];
 			delete _mappings[mediatorClass];
 			_handler.removeMapping(mapping);
 		}
-
+		
 		public function fromMediators():void
 		{
 			for each (var mapping:IMediatorMapping in _mappings)
@@ -77,15 +69,25 @@ package robotlegs.bender.extensions.mediatorMap.impl
 				_handler.removeMapping(mapping);
 			}
 		}
-
+		
 		/*============================================================================*/
 		/* Private Functions                                                          */
 		/*============================================================================*/
-
-		private function createMapping(mediatorClass:Class):StarlingMediatorMapping
+		
+		private function createMapping(mediatorClass:Class):MediatorMapping
 		{
-			const mapping:StarlingMediatorMapping = new StarlingMediatorMapping(_matcher, mediatorClass, _manager, _viewType);
+			const mapping:MediatorMapping = new MediatorMapping(_matcher, mediatorClass);
 			_handler.addMapping(mapping);
+			_mappings[mediatorClass] = mapping;
+			return mapping;
+		}
+		
+		private function lockedMappingFor(mediatorClass:Class):MediatorMapping
+		{
+			const mapping:MediatorMapping = _mappings[mediatorClass];
+			if(mapping)
+				mapping.invalidate();
+			
 			return mapping;
 		}
 	}

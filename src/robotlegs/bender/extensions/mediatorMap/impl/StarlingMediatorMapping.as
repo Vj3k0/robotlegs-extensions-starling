@@ -7,96 +7,104 @@
 
 package robotlegs.bender.extensions.mediatorMap.impl
 {
-	import org.hamcrest.Matcher;
-	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorFactory;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorMappingConfig;
-
+	import robotlegs.bender.extensions.matching.ITypeFilter;
+	import robotlegs.bender.extensions.mediatorMap.api.MediatorMappingError;
+	
 	public class StarlingMediatorMapping implements IMediatorMapping, IMediatorMappingConfig
 	{
-
+		private var _locked:Boolean = false;
+		private var _validator:MediatorMappingValidator;
+		
 		/*============================================================================*/
 		/* Public Properties                                                          */
 		/*============================================================================*/
-
-		private var _matcher:Matcher;
-
-		public function get matcher():Matcher
+		
+		private var _matcher:ITypeFilter;
+		
+		public function get matcher():ITypeFilter
 		{
+			validate();
 			return _matcher;
 		}
-
+		
 		private var _mediatorClass:Class;
-
+		
 		public function get mediatorClass():Class
 		{
 			return _mediatorClass;
 		}
-
-		private var _viewType:Class;
-
-		public function get viewType():Class
-		{
-			return _viewType;
-		}
-
+		
 		private var _guards:Array = [];
-
+		
 		public function get guards():Array
 		{
 			return _guards;
 		}
-
+		
 		private var _hooks:Array = [];
-
+		
 		public function get hooks():Array
 		{
 			return _hooks;
 		}
-
-		/*============================================================================*/
-		/* Private Properties                                                         */
-		/*============================================================================*/
-
-		private var _factory:IMediatorFactory;
-
+		
 		/*============================================================================*/
 		/* Constructor                                                                */
 		/*============================================================================*/
-
-		public function StarlingMediatorMapping(matcher:Matcher, mediatorClass:Class, manager:IMediatorFactory, viewType:Class = null)
+		
+		public function StarlingMediatorMapping(matcher:ITypeFilter, mediatorClass:Class)
 		{
 			_matcher = matcher;
 			_mediatorClass = mediatorClass;
-			_factory = manager;
-			_viewType = viewType;
 		}
-
+		
 		/*============================================================================*/
 		/* Public Functions                                                           */
 		/*============================================================================*/
-
+		
 		public function withGuards(... guards):IMediatorMappingConfig
 		{
+			_validator && _validator.checkGuards(guards);
 			_guards = _guards.concat.apply(null, guards);
 			return this;
 		}
-
+		
 		public function withHooks(... hooks):IMediatorMappingConfig
 		{
+			_validator && _validator.checkHooks(hooks);
 			_hooks = _hooks.concat.apply(null, hooks);
 			return this;
 		}
-
-		public function createMediator(view:Object):Object
+		
+		internal function invalidate():void
 		{
-			return _factory.createMediator(view, this);
+			if(_validator)
+				_validator.invalidate();
+			else
+				createValidator();
+			
+			_guards = [];
+			_hooks = [];
 		}
-
-		public function removeMediator(view:Object):void
+		
+		private function validate():void
 		{
-			_factory.removeMediator(view, this);
+			if(!_validator)
+			{
+				createValidator();
+			}
+			else if(!_validator.valid)
+			{
+				_validator.validate(_guards, _hooks);
+			}
+		}
+		
+		private function createValidator():void
+		{
+			_validator = new MediatorMappingValidator(_guards.slice(), _hooks.slice(), _matcher, _mediatorClass);
 		}
 	}
 }

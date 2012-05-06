@@ -7,7 +7,8 @@
 
 package robotlegs.bender.extensions.modularity.events
 {
-	import robotlegs.bender.framework.context.api.IContext;
+	
+	import robotlegs.bender.framework.api.IContext;
 	
 	import starling.events.Event;
 

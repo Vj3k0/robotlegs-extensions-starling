@@ -14,8 +14,8 @@ package robotlegs.bender.bundles.starling
 	import robotlegs.bender.extensions.viewManager.ManualStageObserverExtension;
 	import robotlegs.bender.extensions.viewManager.StarlingStageObserverExtension;
 	import robotlegs.bender.extensions.viewManager.StarlingViewManagerExtension;
-	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextExtension;
+	import robotlegs.bender.framework.api.IContext;
+	import robotlegs.bender.framework.api.IContextExtension;
 	
 	public class StarlingBundle implements IContextExtension
 	{

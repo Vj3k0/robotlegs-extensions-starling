@@ -105,11 +105,7 @@ package robotlegs.bender.extensions.mediatorMap.impl
 
 		private function onRemovedFromStage(event:Event):void
 		{
-			const mappings:Array = _mappings[event.target];
-			for each (var mapping:IMediatorMapping in mappings)
-			{
-				mapping.removeMediator(event.target);
-			}
+			_factory.removeMediators(event.target);
 		}
 
 		private function initializeMediator(view:DisplayObject, mediator:Object):void

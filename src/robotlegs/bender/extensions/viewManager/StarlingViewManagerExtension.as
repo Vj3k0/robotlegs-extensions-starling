@@ -7,12 +7,13 @@
 
 package robotlegs.bender.extensions.viewManager
 {
+	import org.swiftsuspenders.Injector;
+	
 	import robotlegs.bender.extensions.viewManager.api.IStarlingViewManager;
 	import robotlegs.bender.extensions.viewManager.impl.StarlingContainerRegistry;
 	import robotlegs.bender.extensions.viewManager.impl.StarlingViewManager;
-	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextExtension;
-	import robotlegs.bender.framework.object.managed.impl.ManagedObject;
+	import robotlegs.bender.framework.api.IContext;
+	import robotlegs.bender.framework.api.IContextExtension;
 
 	public class StarlingViewManagerExtension implements IContextExtension
 	{
@@ -27,8 +28,8 @@ package robotlegs.bender.extensions.viewManager
 		/*============================================================================*/
 		/* Private Properties                                                         */
 		/*============================================================================*/
-
-		private var _context:IContext;
+		
+		private var _injector:Injector;
 
 		private var _viewManager:IStarlingViewManager;
 
@@ -38,17 +39,17 @@ package robotlegs.bender.extensions.viewManager
 
 		public function extend(context:IContext):void
 		{
-			_context = context;
+			_injector = context.injector;
 
 			// Just one Container Registry
 			_containerRegistry ||= new StarlingContainerRegistry();
-			_context.injector.map(StarlingContainerRegistry).toValue(_containerRegistry);
+			_injector.map(StarlingContainerRegistry).toValue(_containerRegistry);
 
 			// But you get your own View Manager
-			_context.injector.map(IStarlingViewManager).toSingleton(StarlingViewManager);
-
-			_context.addStateHandler(ManagedObject.SELF_INITIALIZE, handleContextSelfInitialize);
-			_context.addStateHandler(ManagedObject.SELF_DESTROY, handleContextSelfDestroy);
+			_injector.map(IStarlingViewManager).toSingleton(StarlingViewManager);
+			
+			context.lifecycle.whenInitializing(handleContextSelfInitialize);
+			context.lifecycle.whenDestroying(handleContextSelfDestroy);
 		}
 
 		/*============================================================================*/
@@ -57,14 +58,14 @@ package robotlegs.bender.extensions.viewManager
 
 		private function handleContextSelfInitialize():void
 		{
-			_viewManager = _context.injector.getInstance(IStarlingViewManager);
+			_viewManager = _injector.getInstance(IStarlingViewManager);
 		}
 
 		private function handleContextSelfDestroy():void
 		{
 			_viewManager.removeAllHandlers();
-			_context.injector.unmap(IStarlingViewManager);
-			_context.injector.unmap(StarlingContainerRegistry);
+			_injector.unmap(IStarlingViewManager);
+			_injector.unmap(StarlingContainerRegistry);
 		}
 	}
 }

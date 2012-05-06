@@ -9,10 +9,10 @@ package robotlegs.bender.extensions.contextView
 {
 	import org.hamcrest.object.instanceOf;
 	
-	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextExtension;
-	import robotlegs.bender.framework.logging.api.ILogger;
-	import robotlegs.bender.framework.object.identity.UID;
+	import robotlegs.bender.framework.api.IContext;
+	import robotlegs.bender.framework.api.IContextExtension;
+	import robotlegs.bender.framework.api.ILogger;
+	import robotlegs.bender.framework.impl.UID;
 	
 	import starling.display.DisplayObjectContainer;
 

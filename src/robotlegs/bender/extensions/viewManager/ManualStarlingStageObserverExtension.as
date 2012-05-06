@@ -7,11 +7,12 @@
 
 package robotlegs.bender.extensions.viewManager
 {
-	import robotlegs.bender.extensions.viewManager.impl.ManualStarlingStageObserver;
+	import org.swiftsuspenders.Injector;
+	
 	import robotlegs.bender.extensions.viewManager.impl.StarlingContainerRegistry;
-	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextExtension;
-	import robotlegs.bender.framework.object.managed.impl.ManagedObject;
+	import robotlegs.bender.extensions.viewManager.impl.StarlingManualStageObserver;
+	import robotlegs.bender.framework.api.IContext;
+	import robotlegs.bender.framework.api.IContextExtension;
 
 	public class ManualStarlingStageObserverExtension implements IContextExtension
 	{
@@ -21,7 +22,7 @@ package robotlegs.bender.extensions.viewManager
 		/*============================================================================*/
 
 		// Really? Yes, there can be only one.
-		private static var _manualStageObserver:ManualStarlingStageObserver;
+		private static var _manualStageObserver:StarlingManualStageObserver;
 
 		private static var _installCount:uint;
 
@@ -29,7 +30,7 @@ package robotlegs.bender.extensions.viewManager
 		/* Private Properties                                                         */
 		/*============================================================================*/
 
-		private var _context:IContext;
+		private var _injector:Injector;
 
 		/*============================================================================*/
 		/* Public Functions                                                           */
@@ -38,9 +39,9 @@ package robotlegs.bender.extensions.viewManager
 		public function extend(context:IContext):void
 		{
 			_installCount++;
-			_context = context;
-			_context.addStateHandler(ManagedObject.SELF_INITIALIZE, handleContextSelfInitialize);
-			_context.addStateHandler(ManagedObject.SELF_DESTROY, handleContextSelfDestroy);
+			_injector = context.injector;
+			context.lifecycle.whenInitializing(handleContextSelfInitialize);
+			context.lifecycle.whenDestroying(handleContextSelfDestroy);
 		}
 
 		/*============================================================================*/
@@ -51,8 +52,8 @@ package robotlegs.bender.extensions.viewManager
 		{
 			if (_manualStageObserver == null)
 			{
-				const containerRegistry:StarlingContainerRegistry = _context.injector.getInstance(StarlingContainerRegistry);
-				_manualStageObserver = new ManualStarlingStageObserver(containerRegistry);
+				const containerRegistry:StarlingContainerRegistry = _injector.getInstance(StarlingContainerRegistry);
+				_manualStageObserver = new StarlingManualStageObserver(containerRegistry);
 			}
 		}
 

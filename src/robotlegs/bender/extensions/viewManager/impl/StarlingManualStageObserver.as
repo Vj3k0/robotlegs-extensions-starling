@@ -10,7 +10,7 @@ package robotlegs.bender.extensions.viewManager.impl
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 
-	public class ManualStarlingStageObserver
+	public class StarlingManualStageObserver
 	{
 
 		/*============================================================================*/
@@ -23,7 +23,7 @@ package robotlegs.bender.extensions.viewManager.impl
 		/* Constructor                                                                */
 		/*============================================================================*/
 
-		public function ManualStarlingStageObserver(containerRegistry:StarlingContainerRegistry)
+		public function StarlingManualStageObserver(containerRegistry:StarlingContainerRegistry)
 		{
 			_registry = containerRegistry;
 			// We care about all containers (not just roots)

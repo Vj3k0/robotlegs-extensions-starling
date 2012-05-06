@@ -7,25 +7,22 @@
 
 package robotlegs.bender.extensions.mediatorMap.api
 {
-	import org.hamcrest.Matcher;
-	
+	import robotlegs.bender.extensions.matching.ITypeMatcher;
 	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorMapper;
-	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorMappingFinder;
 	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorUnmapper;
-	import robotlegs.bender.extensions.viewManager.api.IStarlingViewHandler;
 
-	public interface IStarlingMediatorMap extends IStarlingViewHandler
+	public interface IStarlingMediatorMap
 	{
-		function map(matcher:Matcher):IMediatorMapper;
-
-		function mapView(viewType:Class):IMediatorMapper;
-
-		function getMapping(matcher:Matcher):IMediatorMappingFinder;
-
-		function getViewMapping(viewType:Class):IMediatorMappingFinder;
-
-		function unmap(matcher:Matcher):IMediatorUnmapper;
-
-		function unmapView(viewType:Class):IMediatorUnmapper;
+		function mapMatcher(matcher:ITypeMatcher):IMediatorMapper;
+		
+		function map(type:Class):IMediatorMapper;
+		
+		function unmapMatcher(matcher:ITypeMatcher):IMediatorUnmapper;
+		
+		function unmap(type:Class):IMediatorUnmapper;
+		
+		function mediate(item:Object):void;
+		
+		function unmediate(item:Object):void;
 	}
 }

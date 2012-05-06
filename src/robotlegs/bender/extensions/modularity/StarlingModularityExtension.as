@@ -10,11 +10,10 @@ package robotlegs.bender.extensions.modularity
 	import org.swiftsuspenders.Injector;
 	
 	import robotlegs.bender.extensions.modularity.events.StarlingModularContextEvent;
-	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.api.IContextExtension;
-	import robotlegs.bender.framework.logging.api.ILogger;
-	import robotlegs.bender.framework.object.identity.UID;
-	import robotlegs.bender.framework.object.managed.impl.ManagedObject;
+	import robotlegs.bender.framework.api.IContext;
+	import robotlegs.bender.framework.api.IContextExtension;
+	import robotlegs.bender.framework.api.ILogger;
+	import robotlegs.bender.framework.impl.UID;
 	
 	import starling.display.DisplayObjectContainer;
 
@@ -70,8 +69,8 @@ package robotlegs.bender.extensions.modularity
 			_context = context;
 			_injector = context.injector;
 			_logger = context.getLogger(this);
-			_context.addStateHandler(ManagedObject.PRE_INITIALIZE, handleContextPreInitialize);
-			_context.addStateHandler(ManagedObject.PRE_DESTROY, handleContextPreDestroy);
+			_context.lifecycle.beforeInitializing(handleContextPreInitialize);
+			_context.lifecycle.beforeDestroying(handleContextPreDestroy);
 		}
 
 		public function toString():String
