@@ -2,11 +2,13 @@
 
 Extension to enable mapping of Starling objects to RL2 framework.
 
+*Note: This is updated port of Alessandro Bianco's [Robotlegs-Starling](https://github.com/alebianco/robotlegs-extensions-starling) extension.*
+
 ## Example
 
 Alessandro Bianco wrote example for his port, you can see it [here](https://github.com/alebianco/StarlingExtension-example).
 
-***TODO**: Add link to example project.*
+*TODO: Add link to example project.*
 
 ## Libraries
 Libraries required for this extension are:
