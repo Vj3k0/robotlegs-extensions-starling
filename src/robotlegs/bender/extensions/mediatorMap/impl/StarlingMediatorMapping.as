@@ -7,16 +7,16 @@
 
 package robotlegs.bender.extensions.mediatorMap.impl
 {
+	import robotlegs.bender.extensions.matching.ITypeFilter;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorFactory;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorMappingConfig;
-	import robotlegs.bender.extensions.matching.ITypeFilter;
-	import robotlegs.bender.extensions.mediatorMap.api.MediatorMappingError;
+	import robotlegs.bender.framework.impl.MappingConfigValidator;
 	
 	public class StarlingMediatorMapping implements IMediatorMapping, IMediatorMappingConfig
 	{
 		private var _locked:Boolean = false;
-		private var _validator:MediatorMappingValidator;
+		private var _validator:MappingConfigValidator;
 		
 		/*============================================================================*/
 		/* Public Properties                                                          */
@@ -90,7 +90,7 @@ package robotlegs.bender.extensions.mediatorMap.impl
 			_hooks = [];
 		}
 		
-		private function validate():void
+		public function validate():void
 		{
 			if(!_validator)
 			{
@@ -104,7 +104,7 @@ package robotlegs.bender.extensions.mediatorMap.impl
 		
 		private function createValidator():void
 		{
-			_validator = new MediatorMappingValidator(_guards.slice(), _hooks.slice(), _matcher, _mediatorClass);
+			_validator = new MappingConfigValidator(_guards.slice(), _hooks.slice(), _matcher, _mediatorClass);
 		}
 	}
 }

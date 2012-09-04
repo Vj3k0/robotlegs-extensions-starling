@@ -17,9 +17,9 @@ package robotlegs.bender.extensions.mediatorMap
 	import robotlegs.bender.extensions.viewManager.api.IStarlingViewHandler;
 	import robotlegs.bender.extensions.viewManager.api.IStarlingViewManager;
 	import robotlegs.bender.framework.api.IContext;
-	import robotlegs.bender.framework.api.IContextExtension;
+	import robotlegs.bender.framework.api.IExtension;
 
-	public class StarlingMediatorMapExtension implements IContextExtension
+	public class StarlingMediatorMapExtension implements IExtension
 	{
 
 		/*============================================================================*/

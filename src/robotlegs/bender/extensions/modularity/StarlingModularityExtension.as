@@ -11,7 +11,7 @@ package robotlegs.bender.extensions.modularity
 	
 	import robotlegs.bender.extensions.modularity.events.StarlingModularContextEvent;
 	import robotlegs.bender.framework.api.IContext;
-	import robotlegs.bender.framework.api.IContextExtension;
+	import robotlegs.bender.framework.api.IExtension;
 	import robotlegs.bender.framework.api.ILogger;
 	import robotlegs.bender.framework.impl.UID;
 	
@@ -23,7 +23,7 @@ package robotlegs.bender.extensions.modularity
 	 *
 	 * <p>It should be installed before context initialization.</p>
 	 */
-	public class StarlingModularityExtension implements IContextExtension
+	public class StarlingModularityExtension implements IExtension
 	{
 
 		/*============================================================================*/

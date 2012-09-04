@@ -12,9 +12,9 @@ package robotlegs.bender.extensions.viewManager
 	import robotlegs.bender.extensions.viewManager.impl.StarlingContainerRegistry;
 	import robotlegs.bender.extensions.viewManager.impl.StarlingManualStageObserver;
 	import robotlegs.bender.framework.api.IContext;
-	import robotlegs.bender.framework.api.IContextExtension;
+	import robotlegs.bender.framework.api.IExtension;
 
-	public class ManualStarlingStageObserverExtension implements IContextExtension
+	public class ManualStarlingStageObserverExtension implements IExtension
 	{
 
 		/*============================================================================*/

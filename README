@@ -1,9 +1,22 @@
-I "ported" this from Omar Gonzalez's Starling Plugin from: https://github.com/s9tpepper/robotlegs-starling-plugin
-to work with the current Robotlegs 2.
+# Robotlegs 2 Starling extension
 
-It's in a very early stage and I'm still figuring out if all the extensions I've ported are really necessary in a Starling application. So far mediator mappings and commands seems to work just as they should.
-Also, it would be great to see if a starling-flavored-context could coexist and cooperate with a regular one.
+Extension to enable mapping of Starling objects to RL2 framework.
 
-Any input and/or help is highly appreciated!
+## Example
 
-There is a simple example at: https://github.com/alebianco/StarlingExtension-example
+Alessandro Bianco wrote example for his port, you can see it [here](https://github.com/alebianco/StarlingExtension-example).
+
+***TODO**: Add link to example project.*
+
+## Libraries
+Libraries required for this extension are:
+
+- Robotlegs v2.0.0b1
+- Starling v1.2
+
+## Credits
+Original extension author is [Omar Gonzalez](https://github.com/s9tpepper).
+
+Extension updated for Robotlegs 2 "bender" by [Alessandro Bianco](https://github.com/alebianco).
+
+Brought up to date by [Vjekoslav Ratkajec](https://github.com/Vj3k0).

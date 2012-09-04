@@ -10,7 +10,7 @@ package robotlegs.bender.extensions.stageSync
 	import org.hamcrest.object.instanceOf;
 	
 	import robotlegs.bender.framework.api.IContext;
-	import robotlegs.bender.framework.api.IContextExtension;
+	import robotlegs.bender.framework.api.IExtension;
 	import robotlegs.bender.framework.api.ILogger;
 	import robotlegs.bender.framework.impl.UID;
 	
@@ -23,7 +23,7 @@ package robotlegs.bender.extensions.stageSync
 	 *
 	 * <p>It should be installed before context initialization.</p>
 	 */
-	public class StarlingStageSyncExtension implements IContextExtension
+	public class StarlingStageSyncExtension implements IExtension
 	{
 
 		/*============================================================================*/
@@ -81,7 +81,7 @@ package robotlegs.bender.extensions.stageSync
 		private function initializeContext():void
 		{
 			_logger.debug("Context view is now on stage. Initializing context...");
-			_context.initialize();
+			_context.lifecycle.initialize();
 			_contextView.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 
@@ -89,7 +89,7 @@ package robotlegs.bender.extensions.stageSync
 		{
 			_logger.debug("Context view has left the stage. Destroying context...");
 			_contextView.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-			_context.destroy();
+			_context.lifecycle.destroy();
 		}
 	}
 }
