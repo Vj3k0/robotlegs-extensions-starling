@@ -6,9 +6,9 @@ Extension to enable mapping of Starling objects to RL2 framework.
 
 ## Example
 
-Alessandro Bianco wrote example for his port, you can see it [here](https://github.com/alebianco/StarlingExtension-example).
+Example using this extension is available [here](https://github.com/Vj3k0/robotlegs-bender-example-simplestarling).
 
-*TODO: Add link to example project.*
+Also, Alessandro Bianco wrote example for his port, you can see it [here](https://github.com/alebianco/StarlingExtension-example).
 
 ## Libraries
 Libraries required for this extension are:
